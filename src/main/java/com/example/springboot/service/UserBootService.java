@@ -35,6 +35,7 @@ public class UserBootService {
      * 设置基本数据信息 String/value类型的
      */
     public void userFindSy() {
+
         logger.info("name:"+name + "and " +"age="+age);
         UserEntity userEntity =new UserEntity();
         userEntity.setName("张三");
