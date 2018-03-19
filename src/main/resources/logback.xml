@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration debug="false">
+	<property name="log.path" value ="D:\\loggers\\logback.log"></property>
 	<!--打印日志输出到控制台-->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<!-- encoder 默认配置为PatternLayoutEncoder -->
@@ -11,83 +12,31 @@
 		</encoder>
 	</appender>
 	<!--日志按照每天输出的-->
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.path}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!--日志文件输出的文件名-->
-            <fileNamePattern>./logs/report-stage2.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>logback.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<!--保留日志文件30天-->
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
-
-	<appender name="PROJ_BORR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<!-- rollover daily -->
-			<fileNamePattern>./logs/proj_borr.%d{yyyy-MM-dd_HH}_%i.log</fileNamePattern>
-			<!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
-			<maxFileSize>100MB</maxFileSize>
-			<maxHistory>1</maxHistory>
+			<maxHistory>30</maxHistory>
 		</rollingPolicy>
-		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<pattern>%msg%n</pattern>
+		<encoder>
+			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+			<charset>UTF-8</charset>
 		</encoder>
 	</appender>
-
-	<appender name="PORJ_UPDATE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<!-- rollover daily -->
-			<fileNamePattern>./logs/proj_update.%d{yyyy-MM-dd_HH}_%i.log</fileNamePattern>
-			<!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
-			<maxFileSize>100MB</maxFileSize>
-			<maxHistory>1</maxHistory>
-		</rollingPolicy>
-		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<pattern>%msg%n</pattern>
-		</encoder>
-	</appender>
-
-    <logger name="org.springframework" level="ERROR">
+	<logger name="org.springframework" level="ERROR">
 		<appender-ref ref="console" />
 		<!--<appender-ref ref="FILE" />-->
 	</logger>
-
 	<logger name="org.mybatis" level="INFO">
 		<appender-ref ref="console" />
-		<!--<appender-ref ref="FILE" />-->
 	</logger>
 	<logger name="java.sql" level="INFO">
 		<appender-ref ref="console" />
 		<!--<appender-ref ref="FILE" />-->
 	</logger>
-	<logger name="org.apache.ibatis" level="INFO">
-		<appender-ref ref="console" />
-		<!--<appender-ref ref="FILE" />-->
-	</logger>
-	<logger name="org.apache.http.impl.conn" level="ERROR">
-		<appender-ref ref="console"/>
-	</logger>
 
-	<logger name="cn.creditease.report.nifa.service" >
-		<appender-ref ref="console" />
-	</logger>
-	<logger name="cn.creditease.sia">
-		<appender-ref ref="FILE" />
-	</logger>
-	<logger name="cn.creditease.skytrain"   >
-		<appender-ref ref="FILE" />
-	</logger>
-
-	<logger name="cn.creditease.report.nifa.logdata.LogProjBorrDataService">
-		<appender-ref ref="PROJ_BORR" />
-	</logger>
-
-	<logger name="cn.creditease.report.nifa.logdata.LogProjUpdateDataService">
-		<appender-ref ref="PORJ_UPDATE" />
-	</logger>
 	<!--日志输出的级别-->
 	<root level="INFO">
 		<appender-ref ref="console" />
